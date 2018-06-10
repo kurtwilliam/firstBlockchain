@@ -1,4 +1,7 @@
-// 4 main parts of a block on a blockchain - the time of creation, the hash from the last block in the blockchain, the hash, and the data
+// import hashing function
+const SHA256 = require('crypto-js/sha256');
+
+// 4 main parts of a block on a blockchain - the time of creation, the hash from the last block in the blockchain, the hash, and the data. Use class to make multiple instances
 class Block {
 	constructor(timestamp, lastHash, hash, data) {
 		this.timestamp = timestamp;
@@ -15,6 +18,7 @@ class Block {
 			Data 		:${this.data}`;
 	}
 	
+	// initial block on blockchain
 	static genesis() {
 		return new this('Genesis time', '------', 'f1r57-h45h', []);
 	}
@@ -22,9 +26,14 @@ class Block {
 	static mineBlock(lastBlock, data) {
 		const timestamp = Date.now();
 		const lastHash = lastBlock.hash;
-		const hash = 'todo-hash';
+		const hash = Block.hash(timestamp, lastHash, data);
 
 		return new this(timestamp, lastHash, hash, data);
+	}
+ 
+ 	// make a hash for this block using inputs and imported SHA256 module. 
+	static hash(timestamp, lastHash, data) {
+		return SHA256(`${timestamp}${lastHash}${data}`).toString();
 	}
 }
 
