@@ -3,6 +3,7 @@ const SHA256 = require('crypto-js/sha256');
 
 // 4 main parts of a block on a blockchain - the time of creation, the hash from the last block in the blockchain, the hash, and the data. Use class to make multiple instances
 class Block {
+	// set initial values
 	constructor(timestamp, lastHash, hash, data) {
 		this.timestamp = timestamp;
 		this.lastHash = lastHash;
@@ -10,6 +11,7 @@ class Block {
 		this.data = data;
 	}
 
+	// Make it so we can see in console
 	toString() {
 		return `Block -
 			Timestamp:${this.timestamp}

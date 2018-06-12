@@ -3,6 +3,7 @@ const Block = require('./block');
 describe('Block', () => {
 	let data, lastBlock, block;
 
+	// jest method 
 	beforeEach(() => {
 		data = 'bar';
 		lastBlock = Block.genesis();
