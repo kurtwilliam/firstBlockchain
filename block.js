@@ -40,7 +40,7 @@ class Block {
 
 	// lets individual block generate a hash
 	static blockHash(block) {
-		const { timestamp, lastHash, hash } = block;
+		const { timestamp, lastHash, data } = block;
 
 		return Block.hash(timestamp, lastHash, data);
 	}
