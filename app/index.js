@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Blockchain = require('../blockchain');
 
+// Use port 3001 if other one isn't available.
 const HTTP_PORT = process.env.HTTP_PORT || 3001;
 
 const app = express();
