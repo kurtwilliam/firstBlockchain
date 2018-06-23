@@ -27,7 +27,7 @@ class Block {
 			Last Hash  :${this.lastHash.substring(0, 10)}
 			Hash       :${this.hash.substring(0, 10)}
 			Nonce      :${this.nonce}
-			Difficulty : ${this.difficulty}
+			Difficulty :${this.difficulty}
 			Data       :${this.data}`;
 	}
 	
@@ -47,16 +47,15 @@ class Block {
 		// and generate a new timestamp each time its mined
 		// demands node spends computational power to find hash
 		do {
-			nonce ++;
-			timestamp = Date.now();
-			difficulty = Block.adjustDifficulty(lastBlock, timestamp);
-			hash = Block.hash(timestamp, lastHash, data, nonce, difficulty);
+			nonce++;
+	      timestamp = Date.now();
+	      difficulty = Block.adjustDifficulty(lastBlock, timestamp);
+	      hash = Block.hash(timestamp, lastHash, data, nonce, difficulty);
 
 			// substring gets the first 0 - difficulty values of the hash to check how many 0's there are
 			// difficulty is defined dynamically 
-		} while(hash.substring(0, difficulty) !== '0'.repeat(difficulty));
+    	} while (hash.substring(0, difficulty) !== '0'.repeat(difficulty));
 		
-
 		return new this(timestamp, lastHash, hash, data, nonce, difficulty);
 	}
  
@@ -72,14 +71,13 @@ class Block {
 		return Block.hash(timestamp, lastHash, data, nonce, difficulty);
 	}
 
+	// Difficulty determines how quickly blocks are added to the chain
 	static adjustDifficulty(lastBlock, currentTime) {
-		let { difficulty } = lastBlock;
-		difficulty = lastBlock.timestamp + MINE_RATE > currentTime 
-			? difficulty + 1
-			: difficulty - 1;
-			
-		return difficulty;
-	}
+    let { difficulty } = lastBlock;
+    difficulty = lastBlock.timestamp + MINE_RATE > currentTime ?
+      difficulty + 1 : difficulty - 1;
+    return difficulty;
+  }
 }
 
 module.exports = Block;
