@@ -14,6 +14,11 @@ class Wallet {
 			balance  : ${this.balance}
 		`
 	}
+
+	// generate signature using wallet 
+	sign(dataHash) {
+		return this.keyPair.sign(dataHash);
+	}
 }
 
 module.exports = Wallet;

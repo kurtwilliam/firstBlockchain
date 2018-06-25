@@ -4,6 +4,8 @@
 const EC = require('elliptic').ec;
 // what Bitcoin uses below
 const ec = new EC('secp256k1');
+// import hashing function
+const SHA256 = require('crypto-js/sha256');
 
 // uuid generates our unique id's.
 // different versions of UUID, v1 fits our needs because
@@ -17,6 +19,10 @@ class ChainUtil {
 
 	static id() {
 		return uuidV1();
+	}
+
+	static hash(data) {
+		return SHA256(JSON.stringify(data)).toString();
 	}
 }
 

@@ -1,5 +1,4 @@
-// import hashing function
-const SHA256 = require('crypto-js/sha256');
+const ChainUtil = require('../chain-util');
 const { DIFFICULTY, MINE_RATE } = require('../config');
 
 // 4 main parts of a block on a blockchain - the time of creation, the hash from the last block in the blockchain, the hash, and the data. Use class to make multiple instances
@@ -61,7 +60,7 @@ class Block {
  
  	// make a hash for this block using inputs and imported SHA256 module. 
 	static hash(timestamp, lastHash, data, nonce, difficulty) {
-		return SHA256(`${timestamp}${lastHash}${data}${nonce}${difficulty}`).toString();
+		return ChainUtil.hash(`${timestamp}${lastHash}${data}${nonce}${difficulty}`).toString();
 	}
 
 	// lets individual block generate a hash

@@ -14,6 +14,7 @@ describe('Transaction', () => {
 
 	it('outputs the `amount` subtracted from the wallet balance', () => {
 		// find the transaction with the matching key, and ensure it's amount matches 
+		console.log(wallet, transaction)
 		expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount).toEqual(wallet.balance - amount);
 	});
 
