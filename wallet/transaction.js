@@ -7,7 +7,8 @@ class Transaction {
 		this.outputs = [];
 	}
 
-	static newTransaction(senderWallet, recepientAddress, amount) {
+	// recipient is recipient address
+	static newTransaction(senderWallet, recipient, amount) {
 		const transaction = new this();
 
 		if (amount > senderWallet.balance) {
