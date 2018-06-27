@@ -46,4 +46,35 @@ describe('Transaction', () => {
 			expect(transaction).toEqual(undefined);
 		});
 	});
+
+	describe('transacting with an amount that exceeds the balance', () => {
+		beforeEach(() => {
+			// increase amount of transaction then make new transaction with this amount
+			amount = 500000;
+			transaction = Transaction.newTransaction(wallet,recipient,amount);
+		});
+
+		it('does not create the transaction', () => {
+			expect(transaction).toEqual(undefined);
+		});
+	});
+
+	describe('and updating a transaction', () => {
+		let nextAmount, nextRecipient;
+
+		beforeEach(() => {
+			// increase amount of transaction then make new transaction with this amount
+			nextAmount = 20;
+			nextRecipient = 'n3xt-4ddr355'
+			transaction = transaction.update(wallet,nextRecipient,nextAmount);
+		});
+
+		it('subtracts the amount from the sender\'s output', () => {
+			expect(transaction.outputs.find(output => output.address === wallet.publicKey).amount).toEqual(wallet.balance - amount - nextAmount);
+		});
+
+		it('outputs an amount for the next recipient', () => {
+			expect(transaction.outputs.find(output => output.address === nextRecipient).amount).toEqual(nextAmount);
+		});
+	});
 });
