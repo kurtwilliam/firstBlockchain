@@ -6,7 +6,7 @@ class TransactionPool {
 		this.transactions = [];
 	}
 
-	updateOrAddTransactions(transaction) {
+	updateOrAddTransaction(transaction) {
 		// we don't want updated transaction from pool to reappear
 		// so lets find it's id and see if it exists
 		let transactionWithId = this.transactions.find(t => t.id === transaction.id);
@@ -16,6 +16,10 @@ class TransactionPool {
 		} else {
 			this.transactions.push(transaction);
 		}
+	}
+
+	existingTransaction(address) {
+		return this.transactions.find(t => t.input.address === address);
 	}
 }
 
