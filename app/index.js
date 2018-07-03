@@ -30,8 +30,16 @@ app.post('/mine', (req, res) => {
 	res.redirect('/blocks');
 });
 
+// Get transactions from transaction pool
 app.get('/transactions', (req, res) => {
 	res.json(tp.transactions);
+});
+
+// Create transaction for transaction pool
+app.post('/transact', (req, res) => {
+	const { recipient, amount } = req.body;
+	const transaction = wallet.createTransaction(recipient, amount, tp);
+	res.redirect('/transactions');
 });
 
 app.listen(HTTP_PORT, () => console.log(`listening on port ${HTTP_PORT}`));
