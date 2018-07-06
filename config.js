@@ -14,4 +14,9 @@ const DIFFICULTY = 3;
 const MINE_RATE = 3000;
 const INITIAL_BALANCE = 500;
 
-module.exports = { DIFFICULTY, MINE_RATE, INITIAL_BALANCE };
+// for mining, no output because it's not an actual transaction
+// also, input is unique as it identifies blockchain to sign
+// not wallet! So we need a special wallet for the blockchain
+const MINING_REWARD = 50;
+
+module.exports = { DIFFICULTY, MINE_RATE, INITIAL_BALANCE, MINING_REWARD };
