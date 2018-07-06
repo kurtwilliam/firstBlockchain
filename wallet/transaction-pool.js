@@ -1,3 +1,5 @@
+const Transaction = require('./wallet/transaction');
+
 // Transaction pool is essentially and queue of to be processed transactions
 // for the miners to mine
 
@@ -20,6 +22,34 @@ class TransactionPool {
 
 	existingTransaction(address) {
 		return this.transactions.find(t => t.input.address === address);
+	}
+
+	// return array of transactions that are valid
+	validTransactions() {
+		// must meet following conditions:
+		// verify signature of every transaction
+		// but we can return a filtered down version, doesn't need
+		// to be the whole thing
+		return this.transactions.filter(transaction => {
+			// total amount of outputs in transaction matches whats in output
+			const outputTotal = transaction.outputs.reduce((total, output) => {
+				return total + output.amount;
+			}, 0);
+
+			// verify output totals
+			if (transaction.input.amount !== outputTotal) { 
+				console.log(`Invalid transaction from ${transaction.input.address}.`);
+				return;
+			}
+
+			// verify signature
+			if (!Transaction.verifyTransaction(transaction)) {
+				console.log(`Invalid Signature from ${transaction.input.address}`);
+				return;
+			}
+
+			return transaction;
+		});
 	}
 }
 
