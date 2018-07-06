@@ -1,4 +1,4 @@
-const Transaction = require('./wallet/transaction');
+const Transaction = require('./transaction');
 
 // Transaction pool is essentially and queue of to be processed transactions
 // for the miners to mine
