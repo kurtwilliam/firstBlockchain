@@ -21,7 +21,7 @@ class Miner {
 		// grab valid transactions from pool
 		// include a reward for the miner
 		const validTransactions	= this.transactionPool.validTransactions();
-		validTransaction.push(
+		validTransactions.push(
 			Transaction.rewardTransaction(this.wallet, Wallet.blockchainWallet())
 		);
 
@@ -35,7 +35,9 @@ class Miner {
 		this.transactionPool.clear();
 
 		// broadcast to every miner to clear their transactionPool
-		
+		this.p2pServer.broadcastClearTransactions();
+
+		return block;
 	}
 }
 
