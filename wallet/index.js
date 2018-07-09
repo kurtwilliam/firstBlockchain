@@ -41,6 +41,45 @@ class Wallet {
 		return transaction;
 	}
 
+	// calculating true balance requires very deeply nested data
+	// need most recent outputs, within transaction objects which
+	// are in block objects, themselves within a chain, so deep whoa
+	calculateBalance(blockchain) {
+		let balance = this.balance;
+		let transactions = [];
+		// look at each blocks data on the blockchain
+		blockchain.chain.forEach(block => block.data.forEach(transaction => {
+			transaction.push(transaction);
+		}));
+
+		const walletInputTs = transactions
+			.filter(transaction => transactions.input.address === this.publicKey);
+
+		let startTime = 0;
+
+		if (walletInputTs.length > 0) {
+			const recentInputT = walletInputTs.reduce(
+				// which one has a higher timestamp?
+				(prev, current) => prev.input.timestamp > current.input.timestamp ? prev : current
+			);
+
+			balance = recentInputT.outputs.find(output => output.address === this.publicKey).amount;
+			startTime = recentInputT.input.timestamp;
+		}
+
+		transactions.forEach(transaction => {
+			if (transactions.input.timestamp > startTime) {
+				transactions.ouputs.find(output => {
+					if (output.address === this.publicKey) {
+						balance += output.amount;
+					}
+				});
+			}
+		});
+
+		return balance;
+	}
+
 	static blockchainWallet() {
 		const blockchainWallet = new this();
 		blockchainWallet.address = 'blockchain-wallet';
