@@ -23,7 +23,7 @@ class Wallet {
 
 	// update pool with transaction, or replace transaction if it already exists
 	createTransaction(recipient, amount, blockchain, transactionPool) {
-		this.balance = this.calculateBalance();
+		this.balance = this.calculateBalance(blockchain);
 
 		if (amount > this.balance) {
 			console.log(`Amount: ${amount} exceeds current balance: ${this.balance}`);
@@ -73,7 +73,7 @@ class Wallet {
 
 		transactions.forEach(transaction => {
 			if (transaction.input.timestamp > startTime) {
-				transactions.ouputs.find(output => {
+				transaction.outputs.find(output => {
 					if (output.address === this.publicKey) {
 						balance += output.amount;
 					}
