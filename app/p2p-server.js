@@ -21,11 +21,11 @@ class P2pServer {
 	// initially create the server 
 	listen() {
 		const server = new Websocket.Server({ port: P2P_PORT });
+		server.on('connection', socket => this.connectSocket(socket));
 
 		this.connectToPeers();
 
 		// listens for messages sent to the websocket server
-		server.on('connection', socket => this.connectSocket(socket));
 		console.log(`Listenting for peer-to-peer connections on: ${P2P_PORT}`);
 	}
 
@@ -51,6 +51,7 @@ class P2pServer {
 		socket.on('message', message => {
 			const data = JSON.parse(message);
 			// synchronize blockchains and keep data up to date
+			console.log(data)
 			switch(data.type){
 				case MESSAGE_TYPES.chain:
 					this.blockchain.replaceChain(data.chain);
@@ -62,8 +63,6 @@ class P2pServer {
 					this.transactionPool.clear();
 					break;
 			}
-
-			this.blockchain.replaceChain(data);
 		})
 	}
 

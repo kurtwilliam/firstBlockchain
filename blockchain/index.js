@@ -13,7 +13,12 @@ class Blockchain {
   }
 
   isValidChain(chain) {
-    if(JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) return false;
+    if(JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) {
+      console.log('block isn\'t valid! blockchain index', chain);
+      console.log('chain[0]',chain[0])
+      console.log('bg',Block.genesis())
+      return false;
+    }
 
     for (let i=1; i<chain.length; i++) {
       const block = chain[i];
@@ -21,6 +26,7 @@ class Blockchain {
 
       if (block.lastHash !== lastBlock.hash ||
           block.hash !== Block.blockHash(block)) {
+        console.log('not a valid chain! blockchain/index');
         return false;
       }
     }
@@ -29,6 +35,7 @@ class Blockchain {
   }
 
   replaceChain(newChain) {
+    console.log('nc',newChain);
     if (newChain.length <= this.chain.length) {
       console.log('Received chain is not longer than the current chain.');
       return;
